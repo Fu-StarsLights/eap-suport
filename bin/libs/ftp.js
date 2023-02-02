@@ -45,14 +45,6 @@ async function run(eapNum) {
 
     if (program && descJson) {
         console.log('-----------------开始同步文件-----------------')
-        // ftpDeploy
-        //     .deploy(config)
-        //     .then((res) => {
-        //         console.log("EAP UPLOAD SUCCESS !!!") // "finished:", res
-        //     })
-        //     .catch((err) => {
-        //         console.log('FtpUpload Error:',err)
-        //     });
         try {
             await ftpDeploy.deploy(config)
         } catch (err) {
