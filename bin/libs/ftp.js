@@ -1,6 +1,8 @@
 const FtpDeploy = require('ftp-deploy')
 const fs = require('fs')
 const path = require('path')
+const cfg= require('../../config.json')
+
 const ftpDeploy = new FtpDeploy();
 
 
@@ -17,21 +19,24 @@ ftpDeploy.on("upload-error", function (data) {
     console.log('FTP UPLOAD ERROR:', data.err);
 });
 
-const config = {
-    user: "root",
-    password: "root",
-    host: "192.168.128.1",
-    port: 21,
-    localRoot: path.join(process.cwd(), 'eap-suport-demo'),
-    remoteRoot: "/root",
-    include: ["*"],
-    exclude: [],
-    deleteRemote: false,
-    forcePasv: true,
-    sftp: false,
-};
 
-async function run(eapNum) {
+
+async function run(eapNum,uninstall) {
+    const config = {
+        user: "root",
+        password: "root",
+        host: cfg.edgerosAddr,
+        port: 21,
+        localRoot: path.join(process.cwd(), 'eap-suport-demo'),
+        remoteRoot: "/root",
+        include: ["*"],
+        exclude: [],
+        deleteRemote: uninstall,
+        forcePasv: true,
+        sftp: false,
+    };
+
+
     config.remoteRoot = path.join('/apps/eos/apps', eapNum.toString())
     config.localRoot = process.cwd()
 
