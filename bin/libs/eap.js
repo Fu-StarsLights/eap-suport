@@ -48,6 +48,7 @@ async function turnOFF() {
  * 重启
  */
 async function restart() {
+    if(config.eapNum===0){return}
     await turnOFF()
     setTimeout(async () => {
         await turnON()
