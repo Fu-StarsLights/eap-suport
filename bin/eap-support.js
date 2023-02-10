@@ -9,7 +9,7 @@
  * Author       : Fu Wenhao <fuwenhao@acoinfo.com>
  * Date         : 2023-02-02 10:25:19
  * LastEditors  : Fu Wenhao <fuwenhao@acoinfo.com>
- * LastEditTime : 2023-02-09 13:11:48
+ * LastEditTime : 2023-02-10 11:07:08
  */
 const fs = require('fs')
 const path = require('path')
@@ -96,3 +96,4 @@ inquirer.prompt([
 function saveConfig(config) {
   fs.writeFileSync(path.join(__dirname, '../config.json'), JSON.stringify(config, null, 4))
 }
+

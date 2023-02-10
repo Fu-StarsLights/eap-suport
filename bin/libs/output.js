@@ -7,11 +7,13 @@
  * Author       : Fu Wenhao <fuwenhao@acoinfo.com>
  * Date         : 2023-02-02 12:36:28
  * LastEditors  : Fu Wenhao <fuwenhao@acoinfo.com>
- * LastEditTime : 2023-02-08 18:46:09
+ * LastEditTime : 2023-02-10 11:34:21
  */
 const { Telnet } = require('telnet-client');
 const { stdin, stdout } = require('process')
 const cfg = require('../../config.json')
+const { Writable } = require('stream')
+
 
 async function connect() {
     const connection = new Telnet()
@@ -41,11 +43,26 @@ async function connect() {
 
     connection.on('connect', () => {
         console.log('-----------------终端已开启-----------------')
+        
+        // 监听输入设备流
+        const writeStream = new Writable({
+            write: function (chunk, encoding, callback) {
+                // console.log('msg:', chunk.toString())
+                callback()
+            },
+            writev: function (chunks, callback) {
+                // console.log('msgev:', chunk.toString())
+                callback()
+            }
+        })
+        stdin.pipe(writeStream)
     })
-
 
     connection.connect(params)
 }
+
+
+
 
 module.exports = {
     connect
