@@ -19,7 +19,7 @@ const { program } = require('commander')
 const ftp = require('./libs/ftp')
 const output = require('./libs/output')
 const config = require('../config.json')
-
+const cauth = require('./libs/cauth')
 // 解析参数
 program.option('-r,--restart', 'Automatic opening')
 program.option('-cfg,--config', 'show config')
@@ -74,6 +74,9 @@ inquirer.prompt([
 
   if (data.eapNum !== 0) {
     await ftp.run(data.eapNum, data.uninstall === 'true')
+    if(data.eapNum >= 100){
+       await cauth.startAuth(data.eapNum)
+    }
   }
 
   if (data.console === 'true') {

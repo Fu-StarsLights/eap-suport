@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2022 EdgerOS Team.
+ * All rights reserved.
+ * 
+ * Detailed license information can be found in the LICENSE file.
+ * 
+ * Author       : Fu Wenhao <fuwenhao@acoinfo.com>
+ * Date         : 2023-02-02 11:36:31
+ * LastEditors  : Fu Wenhao <fuwenhao@acoinfo.com>
+ * LastEditTime : 2023-02-24 12:15:56
+ */
 const FtpDeploy = require('ftp-deploy')
 const fs = require('fs')
 const path = require('path')
@@ -7,7 +18,7 @@ const ftpDeploy = new FtpDeploy();
 
 
 ftpDeploy.on("uploading", function (data) {
-    console.log("FTP UPLOADING:", data.totalFilesCount, data.transferredFileCount, data.filename);
+    console.log("\x1B[32m%s\x1B[36m%s\x1B[0m","UPLOADING:", `${data.totalFilesCount} ${data.transferredFileCount+1} ${data.filename}`);
 });
 ftpDeploy.on("uploaded", function (data) {
     // console.log("FTP UPLOADED:",data.totalFilesCount,data.transferredFileCount,data.filename); 
@@ -16,7 +27,7 @@ ftpDeploy.on("log", function (data) {
     // console.log('FTP LOG:', data);
 });
 ftpDeploy.on("upload-error", function (data) {
-    console.log('FTP UPLOAD ERROR:', data.err);
+    console.log('UPLOAD ERROR:', data.err);
 });
 
 
