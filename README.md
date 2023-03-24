@@ -7,7 +7,7 @@
  * @Author       : Fu Wenhao <fuwenhao@acoinfo.com>
  * @Date         : 2023-02-02 10:22:57
  * @LastEditors  : Fu Wenhao <fuwenhao@acoinfo.com>
- * @LastEditTime : 2023-02-02 16:41:19
+ * @LastEditTime : 2023-03-24 14:17:35
 -->
 # EdgerOS 内置 EAP 开发工具
 
@@ -24,11 +24,14 @@ npm install -g git+https://github.com/Fu-StarsLights/eap-support.git
 esport -h
 
 Usage: eap-support [options]
+
 Options:
-  -r,--restart        Automatic opening
-  -cfg,--config       show config      
-  -t,--token <token>  set user token   
-  -h, --help          display help for command
+  -r,--restart                Automatic opening
+  -cfg,--config               show config
+  -t,--token <token>          set user token, If you enter "update", the token is
+                              automatically refreshed.  The password is required
+  -pwd,--password <password>  set device safe password
+  -h, --help                  display help for command
 ```
 
 * 注意 运行 esport 上传文件时,需要在包含 eap 完整的结构目录中。
