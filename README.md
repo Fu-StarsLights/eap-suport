@@ -7,7 +7,7 @@
  * @Author       : Fu Wenhao <fuwenhao@acoinfo.com>
  * @Date         : 2023-02-02 10:22:57
  * @LastEditors  : Fu Wenhao <fuwenhao@acoinfo.com>
- * @LastEditTime : 2023-03-24 14:17:35
+ * @LastEditTime : 2023-03-28 17:50:13
 -->
 # EdgerOS 内置 EAP 开发工具
 
@@ -31,6 +31,7 @@ Options:
   -t,--token <token>          set user token, If you enter "update", the token is
                               automatically refreshed.  The password is required
   -pwd,--password <password>  set device safe password
+  -c,--copy <remove path>     copy Directory to the remote directory
   -h, --help                  display help for command
 ```
 

@@ -9,13 +9,14 @@
  * Author       : Fu Wenhao <fuwenhao@acoinfo.com>
  * Date         : 2023-02-02 10:25:19
  * LastEditors  : Fu Wenhao <fuwenhao@acoinfo.com>
- * LastEditTime : 2023-03-24 14:15:25
+ * LastEditTime : 2023-03-28 17:47:09
  */
 const fs = require('fs')
 const path = require('path')
-const inquirer = require('inquirer')
-const eap = require('./libs/eap')
 const { program } = require('commander')
+const inquirer = require('inquirer')
+
+const eap = require('./libs/eap')
 const ftp = require('./libs/ftp')
 const output = require('./libs/output')
 const config = require('../config.json')
@@ -25,6 +26,7 @@ program.option('-r,--restart', 'Automatic opening')
 program.option('-cfg,--config', 'show config')
 program.option('-t,--token <token>', 'set user token, If you enter update, the token is automatically refreshed.  The password is required')
 program.option('-pwd,--password <password>', 'set device safe password')
+program.option('-c,--copy <remove path>','copy Directory to the remote directory')
 program.parse(process.argv);
 const options = program.opts();
 
@@ -68,6 +70,15 @@ if (options.password) {
   saveConfig(config)
   process.exit()
 }
+
+
+// 远程copy文件夹
+if(options.copy){
+  ftp.rmCopy(null,options.copy)
+  return
+}
+
+
 
 
 //  重新启动
