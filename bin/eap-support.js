@@ -21,12 +21,14 @@ const ftp = require('./libs/ftp')
 const output = require('./libs/output')
 const config = require('../config.json')
 const cauth = require('./libs/cauth')
+
 // 解析参数
 program.option('-r,--restart', 'Automatic opening')
 program.option('-cfg,--config', 'show config')
 program.option('-t,--token <token>', 'set user token, If you enter update, the token is automatically refreshed.  The password is required')
 program.option('-pwd,--password <password>', 'set device safe password')
-program.option('-c,--copy <remove path>','copy Directory to the remote directory')
+program.option('-c,--copy <remove path>', 'copy Directory to the remote directory')
+program.option('-s,--sync <remove path>', 'synchronize the current folder to the remote end in real time')
 program.parse(process.argv);
 const options = program.opts();
 
@@ -47,7 +49,7 @@ if (options.token) {
       eap.getToken(config.devPwd).then(data => {
         if (data.token) {
           config.token = data.token
-          console.log("[esport] Token Update:",data.token)
+          console.log("[esport] Token Update:", data.token)
           saveConfig(config)
           process.exit()
         }
@@ -73,19 +75,32 @@ if (options.password) {
 
 
 // 远程copy文件夹
-if(options.copy){
-  ftp.rmCopy(null,options.copy)
+if (options.copy) {
+  ftp.rmCopy(null, options.copy)
   return
 }
-
-
-
 
 //  重新启动
 let autoOpenEap = false
 if (options.restart) {
   autoOpenEap = true
 }
+
+
+// 自动同步
+if (options.sync) {
+
+  if (options.sync.indexOf('/') === -1) {
+    console.log('[esport] 请输入正确的路径格式')
+    process.exit()
+  }
+
+  ftp.syncFile(options.sync)
+  return
+}
+
+
+
 
 /**
  * EAP 特权 EAP 开发流程

@@ -32,6 +32,7 @@ Options:
                               automatically refreshed.  The password is required
   -pwd,--password <password>  set device safe password
   -c,--copy <remove path>     copy Directory to the remote directory
+  -s,--sync <remove path>     synchronize the current folder to the remote end in real time
   -h, --help                  display help for command
 ```
 

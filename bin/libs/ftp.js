@@ -93,11 +93,65 @@ async function rmCopy(localPath, RemotePath) {
     return
 }
 
+/**
+ * 实时同步文件到远端
+ */
+async function syncFile(RemotePath) {
+    const basePath = process.cwd()
+    const fileChangeSet = new Set()
+
+    fs.watch(process.cwd(), { recursive: true }, async (eventType, filename) => {
+        fileChangeSet.add(filename)
+    })
+
+
+    function _syncFtp() {
+        if (fileChangeSet.size === 0) { setTimeout(() => { _syncFtp() }, 1000) }
+        for (let filePath of fileChangeSet) {
+            const localFilePath = path.join(basePath, filePath)
+            const fileBasePath = path.dirname(filePath)
+            const fileName = path.basename(filePath)
+
+            const fsStat = fs.statSync(localFilePath, { throwIfNoEntry: false })
+
+            if (fsStat && fsStat.isFile()) {
+                const config = {
+                    user: "root",
+                    password: "root",
+                    host: cfg.edgerosAddr,
+                    port: 21,
+                    localRoot: path.join(basePath, fileBasePath),
+                    remoteRoot: path.join(RemotePath, fileBasePath),
+                    include: [fileName],
+                    exclude: [],
+                    deleteRemote: false,
+                    forcePasv: true,
+                    sftp: false,
+                }
+
+                ftpDeploy.deploy(config).then((res) => {
+                    console.log("文件同步:", localFilePath, '->', path.join(RemotePath, filePath))
+                }).catch(err => {
+                    console.log("文件同步失败:", localFilePath)
+                }).finally(() => {
+                    setTimeout(() => { _syncFtp() }, 1000)
+                })
+            } else {
+                setTimeout(() => { _syncFtp() }, 1000)
+            }
+
+            fileChangeSet.delete(filePath)
+        }
+    }
+
+    _syncFtp()
+}
 
 
 
 
 module.exports = {
     run,
-    rmCopy
+    rmCopy,
+    syncFile
 }
