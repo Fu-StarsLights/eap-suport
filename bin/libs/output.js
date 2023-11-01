@@ -14,8 +14,10 @@ const { stdin, stdout } = require('process')
 const cfg = require('../../config.json')
 const { Writable } = require('stream')
 
-
-async function connect() {
+/**
+ * @param {string} logStr 标记log
+ */
+async function connect(logTag) {
     const connection = new Telnet()
     const params = {
         host: cfg.edgerosAddr,
@@ -34,7 +36,14 @@ async function connect() {
     })
 
     connection.on('data', (data) => {
-        stdout.write(data)
+        const dataStr = data.toString()
+        if (logTag) {
+            if (dataStr.includes(logTag)) {
+                stdout.write(dataStr)
+            }
+        } else {
+            stdout.write(dataStr)
+        }
     })
 
     connection.on('error', (err) => {
@@ -43,7 +52,7 @@ async function connect() {
 
     connection.on('connect', () => {
         console.log('-----------------终端已开启-----------------')
-        
+
         // 监听输入设备流
         const writeStream = new Writable({
             write: function (chunk, encoding, callback) {

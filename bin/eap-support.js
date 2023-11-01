@@ -121,9 +121,15 @@ inquirer.prompt([
     name: 'console',
     type: 'list',
     choices: ['true', 'false']
+  }, {
+    message: '过滤 Eap 日志',
+    name: 'logTag',
+    type: 'string',
+    default: config.logTag
   }
 ]).then(async data => {
   config.eapNum = data.eapNum
+  config.logTag = data.logTag
   saveConfig(config)
 
   if (data.eapNum !== 0) {
@@ -134,7 +140,7 @@ inquirer.prompt([
   }
 
   if (data.console === 'true') {
-    await output.connect()
+    await output.connect(data.logTag)
   }
 
   if (autoOpenEap) {

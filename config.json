@@ -1,6 +1,7 @@
 {
     "edgerosAddr": "192.168.128.1",
-    "eapNum": 75,
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY29pZCI6ImFub255bW91cyIsImV4cCI6MTY4NjA1MDk1OC4yNzMsImRvbWFpbiI6ImE5M3FianUtOGozOW1hLnFkZG8xbS0yb284M2QuZWRnZXJvcy52aXAiLCJpYXQiOjE2ODYwNDAxNTh9.LEt6ICL8aoYW_Rqx_6HOMxwicEHqtEGxC_j89u_d8yY",
-    "devPwd": "0000"
+    "eapNum": 12,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY29pZCI6ImFub255bW91cyIsImV4cCI6MTY5ODgyMTI1NS42NDYsImRvbWFpbiI6IjI2N2RpbC1heXk3enQucWdiaXN0LWV1bGVtdC5lZGdlcm9zLnZpcCIsImlhdCI6MTY5ODgxMDQ1NX0.CzvXXiWajCMIzbuXQswf61oYjsr6OzBL0DnMtrHAcyc",
+    "devPwd": "1234",
+    "logTag": "Homecast"
 }
